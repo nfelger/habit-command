@@ -2,14 +2,8 @@
 
 import sys
 
-def draw_ui():
-  sys.stdout.write('hc> ')
-
-def get_user_input():
-  user_choice = raw_input()
-
-def command_from_input(input):
-  help_text = """  /l          -- list activities
+RESPONSES = {
+    '/h' : """  /l          -- list activities
   /t          -- track activity
   /c          -- create activity
   /s<n>       -- show details for activity
@@ -17,15 +11,24 @@ def command_from_input(input):
   /archive<n> -- archive activity number 'n'
   /revive<n>  -- un-archive activity number 'n'
   /h          -- this help screen
-"""
-  return lambda: help_text
+""",
+    '' : ''
+}
 
-def execute_command(command):
-  output = command()
-  print output
+def draw_ui():
+    sys.stdout.write('hc> ')
+
+
+def response_for_input(input_string):
+    if input_string in RESPONSES:
+        return RESPONSES[input_string]
+    else:
+        return "No idea what you want from me (try /h for help)"
+
+
+draw_ui()
 
 while True:
-  draw_ui()
-  user_input = get_user_input()
-  command = command_from_input(user_input)
-  execute_command(command)
+    user_input = raw_input()
+    print response_for_input(user_input)
+    draw_ui()
