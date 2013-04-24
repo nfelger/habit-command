@@ -1,6 +1,6 @@
 # Introduction
 
-Habit command is a command-line app to help you keep track of habits you're trying to build.
+`habit-command` is a command-line app to help you keep track of habits you're trying to build.
 
 Since this project is about changing human behaviour, it is of utmost importance to include some hand-waving comments about "the brain" and "hunams." So here goes:
 
@@ -14,11 +14,11 @@ At least that's what I chose to believe this fine Wednesday.
 This app is **designed** (that sounds professional, right?) to help you collect your evidence and do the reinforcing.
 
 
-<a id='ref1'></a>[[1]](#ref1link) There's lots of 'em, so I'm sure you could round up one or two who agrees on this… [^](#ref1link)
-<a id='ref2'></a>[[2]](#ref2link) "pretty good" – see what I did there‽ [^](#ref2link)
-<a id='ref3'></a>[[3]](#ref3link) As defined by [pal_sch, Yo Noid et al (2004)](http://www.urbandictionary.com/define.php?term=bullshit). [^](#ref3link)
-<a id='ref4'></a>[[4]](#ref4link) Brains can't actually speak, so we haven't _exactly_ found evidence of this yet, but we're pretty sure that's what going on in the brain's head. [^](#ref4link)
-<a id='ref5'></a>[[5]](#ref5link) Not in the financial sense, tho. That's still your parents' job. [^](#ref5link)
+<a id='ref1'></a>[[1]](#ref1link) There's lots of 'em, so I'm sure you could round up one or two who agrees on this… [^](#ref1link)<br>
+<a id='ref2'></a>[[2]](#ref2link) "pretty good" – see what I did there‽ [^](#ref2link)<br>
+<a id='ref3'></a>[[3]](#ref3link) As defined by [pal_sch, Yo Noid et al (2004)](http://www.urbandictionary.com/define.php?term=bullshit). [^](#ref3link)<br>
+<a id='ref4'></a>[[4]](#ref4link) Brains can't actually speak, so we haven't _exactly_ found evidence of this yet, but we're pretty sure that's what going on in the brain's head. [^](#ref4link)<br>
+<a id='ref5'></a>[[5]](#ref5link) Not in the financial sense, tho. That's still your parents' job. [^](#ref5link)<br>
 
 
 
