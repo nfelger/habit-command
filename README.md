@@ -38,7 +38,7 @@ Your top activities for the last 7 days:
 1. 7pts: work out
 2. 3pts: read
 3. 1pts: study neuroscience
-(/h for help)
+(/h for help, /q to quit)
 
 hc> /h
 /l          -- list activities
@@ -48,6 +48,7 @@ hc> /h
 /list-all   -- list activities (including archived ones)
 /archive<n> -- archive activity number 'n'
 /revive<n>  -- un-archive activity number 'n'
+/q          -- quit
 /h          -- this help screen
 
 hc> /l
