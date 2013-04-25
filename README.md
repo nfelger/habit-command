@@ -38,38 +38,30 @@ Your top activities for the last 7 days:
 1. 7pts: work out
 2. 3pts: read
 3. 1pts: study neuroscience
-(/h for help, /q to quit)
+(? for help, q to quit)
 
-hc> /h
-/l          -- list activities
-/t          -- track activity
-/c          -- create activity
-/s<n>       -- show details for activity
-/list-all   -- list activities (including archived ones)
-/archive<n> -- archive activity number 'n'
-/revive<n>  -- un-archive activity number 'n'
-/q          -- quit
-/h          -- this help screen
+hc> ?
+l            -- list activities
+t <id>       -- track activity
+c <name>     -- create activity
+s <id>       -- show details for activity
+list-all     -- list all activities (including archived ones)
+archive <id> -- archive activity number 'n'
+revive <id>  -- un-archive activity number 'n'
+q            -- quit
+?            -- this help screen
 
-hc> /l
+hc> l
 (1) study neuroscience
 (2) watch game of thrones
 (3) work out
 (4) read
 
-hc> /t
-Which activity would you like to track?
-(1) study neuroscience
-(2) watch game of thrones
-(3) work out
-(4) read
+hc> t 2
 
-?> 2
+hc> c take over the world
 
-hc> /c
-Name: try to take over the world
-
-hc> /s3
+hc> s 3
 Your 'work out' history for the last 7 days:
 
    *     *
