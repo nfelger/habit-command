@@ -35,9 +35,13 @@ class ListActivitiesCommand(Command):
         self.db_cursor = db_cursor
 
     def execute(self, ui):
-        # TODO: handle 0 activities
         db_cursor.execute("SELECT * FROM activities")
         activities = db_cursor.fetchall()
+
+        if len(activities) == 0:
+            ui.write("You haven't created any activities.\nCreate your first activity with `c Take over the world`.\n\n")
+            return
+
         for id, name in activities:
             ui.write("(%d) %s\n" % (id, name))
         ui.write("\n")
@@ -77,6 +81,8 @@ try:
     q            -- quit
     ?            -- this help screen
     """
+        elif re.match('^\s*l$' , user_input):
+            ListActivitiesCommand(db_cursor).execute(ui)
         elif re.match('^\s*c( .*)?$' , user_input):
             activity_name = user_input[2:]
             if activity_name == '' or activity_name == ' ':
@@ -85,10 +91,10 @@ try:
                 command = CreateActivityCommand(activity_name, db_cursor)
                 command.execute(ui)
                 ListActivitiesCommand(db_cursor).execute(ui)
-        elif re.match('^\s*(l|t|s|a|r|q).*' , user_input):
+        elif re.match('^\s*(t|s|a|r|q).*' , user_input):
             print 'NOT IMPLEMENTED'
         else:
-            print "No idea what you want from me (try ? for help)"
+            print "Huh? What is it you want? (try ? for help)\n"
 
         draw_ui(ui)
 # TODO handle EOF
