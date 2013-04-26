@@ -18,17 +18,21 @@ class Command:
 class CreateActivityCommand(Command):
     '''Creates a named activity.'''
     
-    def __init__(self, name):
+    def __init__(self, name, db_cursor):
         self.name = name
+        self.db_cursor = db_cursor
 
-    # def execute(self, ui):
-    #     ui.write("I'M NOT EVEN DOING ANYTGHIN!!\n")
+    def execute(self, ui):
+        statement = "INSERT INTO activities (name) VALUES (:activity_name)"
+        db_cursor.execute(statement, (activity_name,))
+        db_connection.commit()
+        ui.write("Created activity '" + self.name + "'. ")
 
 class ListActivitiesCommand(Command):
     '''Lists all currently active activities (i.e. ones that haven't been archived).'''
 
-    # def execute(self, ui):
-    #     ui.write( "I'M NOT EVEN DOING ANYTGHIN!!\n")
+    def execute(self, ui):
+        ui.write( "I'M NOT EVEN DOING ANYTGHIN!!\n")
 
 def draw_ui(ui):
     ui.write('hc> ')
