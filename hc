@@ -19,7 +19,7 @@ class CreateActivityCommand:
         ui.write("Created activity '" + self.name + "'. Your activities are now:\n\n")
 
 class ListActivitiesCommand:
-    '''Lists all currently active activities (i.e. ones that haven't been archived).'''
+    '''Lists activities.'''
 
     def __init__(self, db_cursor):
         self.db_cursor = db_cursor
