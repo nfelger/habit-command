@@ -3,20 +3,30 @@
 import sys
 import re
 
-class CreateActivityCommand:
+class Command:
+    '''Abstract base command class.'''
+
+    def __init__(self):
+        if(self.__class__ == Command):
+            raise Exception("I'm not really a thing. More of a concept. Maybe try subclassing me?")
+
+    def execute(self, ui):
+        raise Exception('IMPLEMENT ME')
+
+class CreateActivityCommand(Command):
     '''Creates a named activity.'''
     
     def __init__(self, name):
         self.name = name
 
-    def execute(self, ui):
-        ui.write("I'M NOT EVEN DOING ANYTGHIN!!\n")
+    # def execute(self, ui):
+    #     ui.write("I'M NOT EVEN DOING ANYTGHIN!!\n")
 
-class ListActivitiesCommand:
+class ListActivitiesCommand(Command):
     '''Lists all currently active activities (i.e. ones that haven't been archived).'''
 
-    def execute(self, ui):
-        ui.write( "I'M NOT EVEN DOING ANYTGHIN!!\n")
+    # def execute(self, ui):
+    #     ui.write( "I'M NOT EVEN DOING ANYTGHIN!!\n")
 
 def draw_ui(ui):
     ui.write('hc> ')
