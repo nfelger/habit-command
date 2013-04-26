@@ -5,17 +5,7 @@ import re
 import sqlite3
 from sqlite3 import dbapi2 as sqlite
 
-class Command:
-    '''Abstract base command class.'''
-
-    def __init__(self):
-        if(self.__class__ == Command):
-            raise Exception("I'm not really a thing. More of a concept. Maybe try subclassing me?")
-
-    def execute(self, ui):
-        raise Exception('IMPLEMENT ME')
-
-class CreateActivityCommand(Command):
+class CreateActivityCommand:
     '''Creates a named activity.'''
     
     def __init__(self, name, db_cursor):
@@ -28,7 +18,7 @@ class CreateActivityCommand(Command):
         db_connection.commit()
         ui.write("Created activity '" + self.name + "'. Your activities are now:\n\n")
 
-class ListActivitiesCommand(Command):
+class ListActivitiesCommand:
     '''Lists all currently active activities (i.e. ones that haven't been archived).'''
 
     def __init__(self, db_cursor):
