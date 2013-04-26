@@ -2,6 +2,8 @@
 
 import sys
 import re
+import sqlite3
+from sqlite3 import dbapi2 as sqlite
 
 class Command:
     '''Abstract base command class.'''
@@ -28,8 +30,22 @@ class ListActivitiesCommand(Command):
     # def execute(self, ui):
     #     ui.write( "I'M NOT EVEN DOING ANYTGHIN!!\n")
 
+
+DB_CONNECTION = sqlite.connect('hc.db')
+
 def draw_ui(ui):
     ui.write('hc> ')
+
+def init_db():
+    try:
+        DB_CONNECTION.cursor().execute('SELECT * FROM activities LIMIT 1')
+    except sqlite3.OperationalError, e:
+        if not re.match('no such table', e.message):
+            raise e
+        DB_CONNECTION.cursor().execute("CREATE TABLE activities (id INTEGER PRIMARY KEY, name VARCHAR(65535))")
+
+
+init_db()
 
 ui = sys.stdout
 draw_ui(ui)
