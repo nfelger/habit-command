@@ -26,13 +26,22 @@ class CreateActivityCommand(Command):
         statement = "INSERT INTO activities (name) VALUES (:activity_name)"
         db_cursor.execute(statement, (activity_name,))
         db_connection.commit()
-        ui.write("Created activity '" + self.name + "'. ")
+        ui.write("Created activity '" + self.name + "'. Your activities are now:\n\n")
 
 class ListActivitiesCommand(Command):
     '''Lists all currently active activities (i.e. ones that haven't been archived).'''
 
+    def __init__(self, db_cursor):
+        self.db_cursor = db_cursor
+
     def execute(self, ui):
-        ui.write( "I'M NOT EVEN DOING ANYTGHIN!!\n")
+        # TODO: handle 0 activities
+        db_cursor.execute("SELECT * FROM activities")
+        activities = db_cursor.fetchall()
+        for id, name in activities:
+            ui.write("(%d) %s\n" % (id, name))
+        ui.write("\n")
+
 
 def draw_ui(ui):
     ui.write('hc> ')
@@ -75,13 +84,14 @@ try:
             else:
                 command = CreateActivityCommand(activity_name, db_cursor)
                 command.execute(ui)
-                ListActivitiesCommand().execute(ui)
+                ListActivitiesCommand(db_cursor).execute(ui)
         elif re.match('^\s*(l|t|s|a|r|q).*' , user_input):
             print 'NOT IMPLEMENTED'
         else:
             print "No idea what you want from me (try ? for help)"
 
         draw_ui(ui)
+# TODO handle EOF
 except Exception, e:
     print "Oops, something went wrong.", e
 db_connection.close()
