@@ -60,6 +60,13 @@ hc> l
 hc> t 2
 
 hc> c take over the world
+Created activity 'take over the world'. Your activities are now:
+
+(1) study neuroscience
+(2) watch game of thrones
+(3) work out
+(4) read
+(5) take over the world
 
 hc> s 3
 Your 'work out' history for the last 7 days:
