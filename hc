@@ -16,7 +16,7 @@ class CreateActivityCommand:
         statement = "INSERT INTO activities (name) VALUES (:activity_name)"
         db_cursor.execute(statement, (activity_name,))
         db_connection.commit()
-        ui.write("Created activity '" + self.name + "'. Your activities are now:\n\n")
+        ui.write("Created activity %r. Your activities are now:\n\n" % self.name)
 
 class ListActivitiesCommand:
     '''Lists activities.'''
