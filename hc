@@ -3,10 +3,12 @@
 import sys
 import re
 
-def draw_ui():
-    sys.stdout.write('hc> ')
 
-draw_ui()
+def draw_ui(ui):
+    ui.write('hc> ')
+
+ui = sys.stdout
+draw_ui(ui)
 
 while True:
     user_input = raw_input()
@@ -28,4 +30,4 @@ q            -- quit
     else:
         print "No idea what you want from me (try ? for help)"
 
-    draw_ui()
+    draw_ui(ui)
