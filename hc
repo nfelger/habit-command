@@ -17,6 +17,7 @@ class CreateActivityCommand:
         db_cursor.execute(statement, (activity_name,))
         db_connection.commit()
         ui.write("Created activity %r. Your activities are now:\n\n" % self.name)
+        ListActivitiesCommand(self.db_cursor).execute(ui)
 
 class ListActivitiesCommand:
     '''Lists activities.'''
@@ -78,9 +79,7 @@ try:
             if activity_name == '' or activity_name == ' ':
                 print 'I need a name for the activity, please.'
             else:
-                command = CreateActivityCommand(activity_name, db_cursor)
-                command.execute(ui)
-                ListActivitiesCommand(db_cursor).execute(ui)
+                CreateActivityCommand(activity_name, db_cursor).execute(ui)
         elif re.match('^\s*(t|s|a|r|q).*' , user_input):
             print 'NOT IMPLEMENTED'
         else:
