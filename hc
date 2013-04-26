@@ -97,7 +97,12 @@ try:
             print "Huh? What is it you want? (try ? for help)\n"
 
         draw_ui(ui)
-# TODO handle EOF
+
+except EOFError, e:
+    print "\n"
+    pass # CTRL-d to exit
+
 except Exception, e:
     print "Oops, something went wrong.", e
+
 db_connection.close()
