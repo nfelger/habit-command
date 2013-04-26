@@ -55,9 +55,9 @@ try:
     db_cursor = db_connection.cursor()
 
     ui = sys.stdout
-    draw_ui(ui)
 
     while True:
+        draw_ui(ui)
         user_input = raw_input()
 
         if re.match('^\s*\?$' , user_input):
@@ -72,20 +72,22 @@ try:
     q            -- quit
     ?            -- this help screen
     """
+
         elif re.match('^\s*l$' , user_input):
             ListActivitiesCommand(db_cursor).execute(ui)
+
         elif re.match('^\s*c( .*)?$' , user_input):
-            activity_name = user_input[2:]
-            if activity_name == '' or activity_name == ' ':
-                print 'I need a name for the activity, please.'
-            else:
-                CreateActivityCommand(activity_name, db_cursor).execute(ui)
+            activity_name = user_input[2:].strip()
+            if not activity_name:
+                print 'I need a name for the activity, please.\n'
+                continue
+            CreateActivityCommand(activity_name, db_cursor).execute(ui)
+
         elif re.match('^\s*(t|s|a|r|q).*' , user_input):
             print 'NOT IMPLEMENTED'
+
         else:
             print "Huh? What is it you want? (try ? for help)\n"
-
-        draw_ui(ui)
 
 except EOFError, e:
     print "\n"
