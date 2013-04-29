@@ -20,6 +20,13 @@ usage_text = """\
     ?            -- this help screen
     """
 
+command_regexes = {
+    'help':    '^\s*\?$',
+    'list':    '^\s*l$',
+    'create':  '^\s*c( .*)?$',
+    'notimpl': '^\s*(t|s|a|r|q).*'
+}
+
 def draw_ui(ui):
     ui.write('hc> ')
 
@@ -32,20 +39,20 @@ try:
         draw_ui(ui)
         user_input = raw_input()
 
-        if re.match('^\s*\?$' , user_input):
+        if re.match(command_regexes['help'] , user_input):
             print usage_text
 
-        elif re.match('^\s*l$' , user_input):
+        elif re.match(command_regexes['list'] , user_input):
             ListActivitiesCommand(db_connection).execute(ui)
 
-        elif re.match('^\s*c( .*)?$' , user_input):
+        elif re.match(command_regexes['create'], user_input):
             activity_name = user_input[2:].strip()
             if not activity_name:
                 print 'I need a name for the activity, please.\n'
                 continue
             CreateActivityCommand(activity_name, db_connection).execute(ui)
 
-        elif re.match('^\s*(t|s|a|r|q).*' , user_input):
+        elif re.match(command_regexes['notimpl'], user_input):
             print 'NOT IMPLEMENTED'
 
         else:
