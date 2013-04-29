@@ -5,7 +5,8 @@ import re
 import habit_command
 from habit_command.commands import (
     CreateActivityCommand, 
-    ListActivitiesCommand)
+    ListActivitiesCommand,
+    NotImplementedCommand)
 from sqlite3 import dbapi2 as sqlite
 
 usage_text = """\
@@ -51,7 +52,7 @@ try:
             CreateActivityCommand(activity_name, db_connection).execute(ui)
 
         elif re.match(command_regexes['notimpl'], user_input):
-            print 'NOT IMPLEMENTED'
+            NotImplementedCommand().execute(ui)
 
         else:
             ui.write("Huh? What is it you want? (try ? for help)\n\n")

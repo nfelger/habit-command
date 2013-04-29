@@ -35,3 +35,9 @@ class ListActivitiesCommand:
         for id, name in activities:
             ui.write("(%d) %s\n" % (id, name))
         ui.write("\n")
+
+class NotImplementedCommand:
+    """Prints a notice that this functionality isn't supported, yet."""
+
+    def execute(self, ui):
+        ui.write('NOT IMPLEMENTED\n\n')
