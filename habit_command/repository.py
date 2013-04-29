@@ -39,7 +39,8 @@ class Repository:
         try:
             # QQQ: Is there a better way to test for table existence?
             statement = """CREATE TABLE activities (
-                    id INTEGER PRIMARY KEY, name VARCHAR(65535)
+                    id INTEGER PRIMARY KEY,
+                    name VARCHAR(65535)
                 )"""
             self.connection.cursor().execute(statement)
             self.connection.commit()

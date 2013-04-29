@@ -16,10 +16,10 @@ COMMAND_REGEXES = {
 def match(user_input):
     """Parse user supplied command string into an executable command."""
 
-    if re.match(COMMAND_REGEXES['help'] , user_input):
+    if re.match(COMMAND_REGEXES['help'], user_input):
         return HelpCommand()
 
-    elif re.match(COMMAND_REGEXES['list'] , user_input):
+    elif re.match(COMMAND_REGEXES['list'], user_input):
         return ListActivitiesCommand()
 
     elif re.match(COMMAND_REGEXES['create'], user_input):
