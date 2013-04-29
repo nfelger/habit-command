@@ -1,21 +1,10 @@
 #!/usr/bin/env python
 
 import sys
-import re
 import habit_command
-from habit_command.commands import (
-    CreateActivityCommand, 
-    ListActivitiesCommand,
-    HelpCommand,
-    NotImplementedCommand)
+from habit_command import parser
 from sqlite3 import dbapi2 as sqlite
 
-command_regexes = {
-    'help':    '^\s*\?$',
-    'list':    '^\s*l$',
-    'create':  '^\s*c( .*)?$',
-    'notimpl': '^\s*(t|s|a|r|q).*'
-}
 
 def draw_ui(ui):
     ui.write('hc> ')
@@ -29,21 +18,12 @@ try:
         draw_ui(ui)
         user_input = raw_input()
 
-        if re.match(command_regexes['help'] , user_input):
-            HelpCommand().execute(ui)
-
-        elif re.match(command_regexes['list'] , user_input):
-            ListActivitiesCommand(db_connection).execute(ui)
-
-        elif re.match(command_regexes['create'], user_input):
-            activity_name = user_input[2:].strip()
-            CreateActivityCommand(activity_name, db_connection).execute(ui)
-
-        elif re.match(command_regexes['notimpl'], user_input):
-            NotImplementedCommand().execute(ui)
-
-        else:
+        command = parser.match(user_input, db_connection)
+        if command is None:
             ui.write("Huh? What is it you want? (try ? for help)\n\n")
+            continue
+
+        command.execute(ui)
 
 except EOFError, e:
     print "\n"
