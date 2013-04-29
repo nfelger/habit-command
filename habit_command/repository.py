@@ -3,14 +3,20 @@ from sqlite3 import OperationalError
 from sqlite3 import dbapi2 as sqlite
 
 class Repository:
+    """Encapsulates DB access."""
+
     def __init__(self, db_name):
         self.db_name = db_name
+        self.connection = None
 
     def init_connection(self):
-        self.connection = sqlite.connect(db_name)
+        """Set up DB connection, create DB & tables if necessary."""
+
+        self.connection = sqlite.connect(self.db_name)
         self._set_up_tables()
 
     def close_connection(self):
+        """Close DB connection."""
         self.connection.close()
 
     def create_activity(self, name):
@@ -32,7 +38,10 @@ class Repository:
     def _set_up_tables(self):
         try:
             # QQQ: Is there a better way to test for table existence?
-            self.connection.cursor().execute("CREATE TABLE activities (id INTEGER PRIMARY KEY, name VARCHAR(65535))")
+            statement = """CREATE TABLE activities (
+                    id INTEGER PRIMARY KEY, name VARCHAR(65535)
+                )"""
+            self.connection.cursor().execute(statement)
             self.connection.commit()
         except OperationalError, e:
             # Bubble up any unexpected exceptions.
@@ -41,18 +50,16 @@ class Repository:
 
 
 
-db_name = 'hc.db'
-repo = Repository(db_name)
-
+REPO = Repository('hc.db')
 
 def init_connection():
-    repo.init_connection()
+    REPO.init_connection()
 
 def close_connection():
-    repo.close_connection()
+    REPO.close_connection()
 
 def create_activity(name):
-    repo.create_activity(name)
+    REPO.create_activity(name)
 
 def get_all_activities():
-    return repo.get_all_activities()
+    return REPO.get_all_activities()

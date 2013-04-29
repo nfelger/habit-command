@@ -1,7 +1,7 @@
 import sys
 
-import parser
-import repository
+import habit_command.parser as parser
+import habit_command.repository as repository
 
 class Session:
     """An interactive habit-command CLI session."""

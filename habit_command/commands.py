@@ -1,4 +1,4 @@
-import repository
+import habit_command.repository as repository
 
 class CreateActivityCommand:
     """Creates a named activity."""
@@ -25,11 +25,12 @@ class ListActivitiesCommand:
         activities = repository.get_all_activities()
         
         if len(activities) == 0:
-            ui.write("You haven't created any activities.\nCreate your first activity with `c Take over the world`.\n\n")
+            ui.write("You haven't created any activities.\n" +
+                "Create your first activity with `c Take over the world`.\n\n")
             return
 
-        for id, name in activities:
-            ui.write("(%d) %s\n" % (id, name))
+        for uid, name in activities:
+            ui.write("(%d) %s\n" % (uid, name))
         ui.write("\n")
 
 
