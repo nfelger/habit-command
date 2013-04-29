@@ -18,6 +18,7 @@ usage_text = """\
     revive <id>  -- un-archive activity number 'n'
     q            -- quit
     ?            -- this help screen
+
     """
 
 command_regexes = {
@@ -40,7 +41,7 @@ try:
         user_input = raw_input()
 
         if re.match(command_regexes['help'] , user_input):
-            print usage_text
+            ui.write(usage_text)
 
         elif re.match(command_regexes['list'] , user_input):
             ListActivitiesCommand(db_connection).execute(ui)
@@ -53,7 +54,7 @@ try:
             print 'NOT IMPLEMENTED'
 
         else:
-            print "Huh? What is it you want? (try ? for help)\n"
+            ui.write("Huh? What is it you want? (try ? for help)\n\n")
 
 except EOFError, e:
     print "\n"

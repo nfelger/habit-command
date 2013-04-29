@@ -8,7 +8,7 @@ class CreateActivityCommand:
 
     def execute(self, ui):
         if not self.name:
-            print 'I need a name for the activity, please.\n'
+            ui.write('I need a name for the activity, please.\n\n')
             return
 
         statement = "INSERT INTO activities (name) VALUES (:activity_name)"
