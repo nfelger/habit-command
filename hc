@@ -47,9 +47,6 @@ try:
 
         elif re.match(command_regexes['create'], user_input):
             activity_name = user_input[2:].strip()
-            if not activity_name:
-                print 'I need a name for the activity, please.\n'
-                continue
             CreateActivityCommand(activity_name, db_connection).execute(ui)
 
         elif re.match(command_regexes['notimpl'], user_input):

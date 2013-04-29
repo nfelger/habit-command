@@ -7,6 +7,10 @@ class CreateActivityCommand:
         self.db_cursor = db_connection.cursor()
 
     def execute(self, ui):
+        if not self.name:
+            print 'I need a name for the activity, please.\n'
+            return
+
         statement = "INSERT INTO activities (name) VALUES (:activity_name)"
         self.db_cursor.execute(statement, (self.name,))
         self.db_connection.commit()
