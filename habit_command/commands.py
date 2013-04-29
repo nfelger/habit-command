@@ -1,4 +1,4 @@
-import habit_command.repository as repository
+from habit_command.repository import REPO
 
 class CreateActivityCommand:
     """Creates a named activity."""
@@ -11,7 +11,7 @@ class CreateActivityCommand:
             ui.write('I need a name for the activity, please.\n\n')
             return
 
-        repository.create_activity(self.name)
+        REPO.create_activity(self.name)
         ui.write("Created activity %r.\n" % self.name)
 
         ui.write("Your activities are now:\n\n")
@@ -22,7 +22,7 @@ class ListActivitiesCommand:
     """Lists activities."""
 
     def execute(self, ui):
-        activities = repository.get_all_activities()
+        activities = REPO.get_all_activities()
         
         if len(activities) == 0:
             ui.write("You haven't created any activities.\n" +

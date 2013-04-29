@@ -1,7 +1,7 @@
 import sys
 
 import habit_command.parser as parser
-import habit_command.repository as repository
+from habit_command.repository import REPO
 
 class Session:
     """An interactive habit-command CLI session."""
@@ -11,7 +11,7 @@ class Session:
 
     def start_loop(self):
         try:
-            repository.init_connection()
+            REPO.init_connection()
             ui = sys.stdout
 
             while True:
@@ -33,4 +33,4 @@ class Session:
             print "Oops, something went wrong: %r" % e
 
         # QQQ: Is there a Python equivalent of ensure/finally?
-        repository.close_connection()
+        REPO.close_connection()

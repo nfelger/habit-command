@@ -49,17 +49,4 @@ class Repository:
                 raise e
 
 
-
 REPO = Repository('hc.db')
-
-def init_connection():
-    REPO.init_connection()
-
-def close_connection():
-    REPO.close_connection()
-
-def create_activity(name):
-    REPO.create_activity(name)
-
-def get_all_activities():
-    return REPO.get_all_activities()
