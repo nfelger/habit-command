@@ -6,16 +6,13 @@ from habit_command.repository import REPO
 class Session:
     """An interactive habit-command CLI session."""
 
-    def draw_ui(self, ui):
-        ui.write('hc> ')
-
     def start_loop(self):
         try:
             REPO.init_connection()
             ui = sys.stdout
 
             while True:
-                self.draw_ui(ui)
+                ui.write('hc> ')
                 user_input = raw_input()
 
                 command = parser.match(user_input)
