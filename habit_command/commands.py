@@ -18,6 +18,7 @@ class CreateActivityCommand:
         ui.write("Your activities are now:\n\n")
         ListActivitiesCommand(self.db_connection).execute(ui)
 
+
 class ListActivitiesCommand:
     '''Lists activities.'''
 
@@ -35,6 +36,27 @@ class ListActivitiesCommand:
         for id, name in activities:
             ui.write("(%d) %s\n" % (id, name))
         ui.write("\n")
+
+
+class HelpCommand:
+    """Prints usage information."""
+
+    usage_text = """\
+    l            -- list activities
+    t <id>       -- track activity
+    c <name>     -- create activity
+    s <id>       -- show details for activity
+    list-all     -- list all activities (including archived ones)
+    archive <id> -- archive activity number 'n'
+    revive <id>  -- un-archive activity number 'n'
+    q            -- quit
+    ?            -- this help screen
+
+"""
+
+    def execute(self, ui):
+        ui.write(self.usage_text)
+
 
 class NotImplementedCommand:
     """Prints a notice that this functionality isn't supported, yet."""

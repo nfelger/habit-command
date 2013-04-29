@@ -6,21 +6,9 @@ import habit_command
 from habit_command.commands import (
     CreateActivityCommand, 
     ListActivitiesCommand,
+    HelpCommand,
     NotImplementedCommand)
 from sqlite3 import dbapi2 as sqlite
-
-usage_text = """\
-    l            -- list activities
-    t <id>       -- track activity
-    c <name>     -- create activity
-    s <id>       -- show details for activity
-    list-all     -- list all activities (including archived ones)
-    archive <id> -- archive activity number 'n'
-    revive <id>  -- un-archive activity number 'n'
-    q            -- quit
-    ?            -- this help screen
-
-    """
 
 command_regexes = {
     'help':    '^\s*\?$',
@@ -42,7 +30,7 @@ try:
         user_input = raw_input()
 
         if re.match(command_regexes['help'] , user_input):
-            ui.write(usage_text)
+            HelpCommand().execute(ui)
 
         elif re.match(command_regexes['list'] , user_input):
             ListActivitiesCommand(db_connection).execute(ui)
