@@ -4,6 +4,7 @@ from sqlite3 import dbapi2 as sqlite
 
 def _init_db(db_connection):
     try:
+        # QQQ: Is there a better way to test for table existence?
         db_connection.cursor().execute('SELECT * FROM activities LIMIT 1')
     except OperationalError, e:
         # Bubble up any unexpected exceptions.
