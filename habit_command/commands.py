@@ -1,34 +1,29 @@
-class CreateActivityCommand:
-    '''Creates a named activity.'''
+import repository
 
-    def __init__(self, name, db_connection):
+class CreateActivityCommand:
+    """Creates a named activity."""
+
+    def __init__(self, name):
         self.name = name
-        self.db_connection = db_connection
-        self.db_cursor = db_connection.cursor()
 
     def execute(self, ui):
         if not self.name:
             ui.write('I need a name for the activity, please.\n\n')
             return
 
-        statement = "INSERT INTO activities (name) VALUES (:activity_name)"
-        self.db_cursor.execute(statement, (self.name,))
-        self.db_connection.commit()
+        repository.create_activity(self.name)
         ui.write("Created activity %r.\n" % self.name)
+
         ui.write("Your activities are now:\n\n")
-        ListActivitiesCommand(self.db_connection).execute(ui)
+        ListActivitiesCommand().execute(ui)
 
 
 class ListActivitiesCommand:
-    '''Lists activities.'''
-
-    def __init__(self, db_connection):
-        self.db_cursor = db_connection.cursor()
+    """Lists activities."""
 
     def execute(self, ui):
-        self.db_cursor.execute("SELECT * FROM activities")
-        activities = self.db_cursor.fetchall()
-
+        activities = repository.get_all_activities()
+        
         if len(activities) == 0:
             ui.write("You haven't created any activities.\nCreate your first activity with `c Take over the world`.\n\n")
             return

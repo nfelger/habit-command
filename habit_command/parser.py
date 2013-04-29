@@ -1,6 +1,6 @@
 import re
 
-from habit_command.commands import (
+from commands import (
     CreateActivityCommand,
     ListActivitiesCommand,
     HelpCommand,
@@ -14,16 +14,16 @@ command_regexes = {
     'notimpl': '^\s*(t|s|a|r|q).*'
 }
 
-def match(user_input, db_connection):
+def match(user_input):
     if re.match(command_regexes['help'] , user_input):
         return HelpCommand()
 
     elif re.match(command_regexes['list'] , user_input):
-        return ListActivitiesCommand(db_connection)
+        return ListActivitiesCommand()
 
     elif re.match(command_regexes['create'], user_input):
         activity_name = user_input[2:].strip()
-        return CreateActivityCommand(activity_name, db_connection)
+        return CreateActivityCommand(activity_name)
 
     elif re.match(command_regexes['notimpl'], user_input):
         return NotImplementedCommand()

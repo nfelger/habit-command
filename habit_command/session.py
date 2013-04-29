@@ -1,7 +1,7 @@
 import sys
 
-from habit_command import parser
-from sqlite3 import dbapi2 as sqlite
+import parser
+import repository
 
 class Session:
     """An interactive habit-command CLI session."""
@@ -10,15 +10,15 @@ class Session:
         ui.write('hc> ')
 
     def start_loop(self):
-        db_connection = sqlite.connect('hc.db')
         try:
+            repository.init_connection()
             ui = sys.stdout
 
             while True:
                 self.draw_ui(ui)
                 user_input = raw_input()
 
-                command = parser.match(user_input, db_connection)
+                command = parser.match(user_input)
                 if command is None:
                     ui.write("Huh? What is it you want? (try ? for help)\n\n")
                     continue
@@ -33,4 +33,4 @@ class Session:
             print "Oops, something went wrong: %r" % e
 
         # QQQ: Is there a Python equivalent of ensure/finally?
-        db_connection.close()
+        repository.close_connection()
