@@ -1,29 +1,34 @@
 from habit_command.repository import REPO
 
-class CreateActivityCommand:
+class Command:
+    """Command base class."""
+
+    def __init__(self, args=""):
+        self.args = args
+
+
+class CreateActivityCommand(Command):
     """Creates a named activity."""
 
-    def __init__(self, name):
-        self.name = name
-
     def execute(self, ui):
-        if not self.name:
+        name = ' '.join(self.args)
+        if not name:
             ui.write('I need a name for the activity, please.\n\n')
             return
 
-        REPO.create_activity(self.name)
-        ui.write("Created activity %r.\n" % self.name)
+        REPO.create_activity(name)
+        ui.write("Created activity %r.\n" % name)
 
         ui.write("Your activities are now:\n\n")
         ListActivitiesCommand().execute(ui)
 
 
-class ListActivitiesCommand:
+class ListActivitiesCommand(Command):
     """Lists activities."""
 
     def execute(self, ui):
         activities = REPO.get_all_activities()
-        
+
         if len(activities) == 0:
             ui.write("You haven't created any activities.\n" +
                 "Create your first activity with `c Take over the world`.\n\n")
@@ -34,7 +39,7 @@ class ListActivitiesCommand:
         ui.write("\n")
 
 
-class HelpCommand:
+class HelpCommand(Command):
     """Prints usage information."""
 
     usage_text = """\
@@ -54,7 +59,7 @@ class HelpCommand:
         ui.write(self.usage_text)
 
 
-class NotImplementedCommand:
+class NotImplementedCommand(Command):
     """Prints a notice that this functionality isn't supported, yet."""
 
     def execute(self, ui):

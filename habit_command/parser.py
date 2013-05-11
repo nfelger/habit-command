@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 import re
 
 from habit_command.commands import (
@@ -7,27 +9,19 @@ from habit_command.commands import (
     NotImplementedCommand)
 
 COMMAND_REGEXES = {
-    'help':    r'^\s*\?$',
-    'list':    r'^\s*l$',
-    'create':  r'^\s*c( .*)?$',
-    'notimpl': r'^\s*(t|s|a|r|q).*'
+    'help':    (r'^\s*\?$',           HelpCommand),
+    'list':    (r'^\s*l$',            ListActivitiesCommand),
+    'create':  (r'^\s*c( .*)?$',      CreateActivityCommand),
+    'notimpl': (r'^\s*(t|s|a|r|q).*', NotImplementedCommand)
 }
 
 def match(user_input):
     """Parse user supplied command string into an executable command."""
 
-    if re.match(COMMAND_REGEXES['help'], user_input):
-        return HelpCommand()
+    for key in COMMAND_REGEXES:
+        regexp, command_class = COMMAND_REGEXES[key]
+        if re.match(regexp, user_input):
+            args = user_input.split()[1:]
+            return command_class(args)
 
-    elif re.match(COMMAND_REGEXES['list'], user_input):
-        return ListActivitiesCommand()
-
-    elif re.match(COMMAND_REGEXES['create'], user_input):
-        activity_name = user_input[2:].strip()
-        return CreateActivityCommand(activity_name)
-
-    elif re.match(COMMAND_REGEXES['notimpl'], user_input):
-        return NotImplementedCommand()
-
-    else:
-        return None
+    return None
