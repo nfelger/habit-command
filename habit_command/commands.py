@@ -47,9 +47,6 @@ class HelpCommand(Command):
     t <id>       -- track activity
     c <name>     -- create activity
     s <id>       -- show details for activity
-    list-all     -- list all activities (including archived ones)
-    archive <id> -- archive activity number 'n'
-    revive <id>  -- un-archive activity number 'n'
     q            -- quit
     ?            -- this help screen
 
