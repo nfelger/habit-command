@@ -3,31 +3,30 @@ import sys
 import habit_command.parser as parser
 from habit_command.repository import REPO
 
-class Session:
-    """An interactive habit-command CLI session."""
+def start_loop():
+    """Start interactive habit-command CLI session."""
 
-    def start_loop(self):
-        try:
-            REPO.init_connection()
-            ui = sys.stdout
+    try:
+        REPO.init_connection()
+        ui = sys.stdout
 
-            while True:
-                ui.write('hc> ')
-                user_input = raw_input()
+        while True:
+            ui.write('hc> ')
+            user_input = raw_input()
 
-                command = parser.match(user_input)
-                if command is None:
-                    ui.write("Huh? What is it you want? (try ? for help)\n\n")
-                    continue
+            command = parser.match(user_input)
+            if command is None:
+                ui.write("Huh? What is it you want? (try ? for help)\n\n")
+                continue
 
-                command.execute(ui)
+            command.execute(ui)
 
-        except EOFError, e:
-            print "\n"
-            pass # CTRL-d to exit
+    except EOFError, e:
+        print "\n"
+        pass # CTRL-d to exit
 
-        except Exception, e:
-            print "Oops, something went wrong: %r" % e
+    except Exception, e:
+        print "Oops, something went wrong: %r" % e
 
-        # QQQ: Is there a Python equivalent of ensure/finally?
-        REPO.close_connection()
+    # QQQ: Is there a Python equivalent of ensure/finally?
+    REPO.close_connection()
