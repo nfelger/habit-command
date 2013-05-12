@@ -10,33 +10,33 @@ class Command:
 class CreateActivityCommand(Command):
     """Creates a named activity."""
 
-    def execute(self, ui):
+    def execute(self, session):
         name = ' '.join(self.args)
         if not name:
-            ui.write('I need a name for the activity, please.\n\n')
+            session.render('I need a name for the activity, please.\n\n')
             return
 
         REPO.create_activity(name)
-        ui.write("Created activity %r.\n" % name)
+        session.render("Created activity %r.\n" % name)
 
-        ui.write("Your activities are now:\n\n")
-        ListActivitiesCommand().execute(ui)
+        session.render("Your activities are now:\n\n")
+        ListActivitiesCommand().execute(session)
 
 
 class ListActivitiesCommand(Command):
     """Lists activities."""
 
-    def execute(self, ui):
+    def execute(self, session):
         activities = REPO.get_all_activities()
 
         if len(activities) == 0:
-            ui.write("You haven't created any activities.\n" +
+            session.render("You haven't created any activities.\n" +
                 "Create your first activity with `c Take over the world`.\n\n")
             return
 
         for uid, name in activities:
-            ui.write("(%d) %s\n" % (uid, name))
-        ui.write("\n")
+            session.render("(%d) %s\n" % (uid, name))
+        session.render("\n")
 
 
 class HelpCommand(Command):
@@ -52,12 +52,12 @@ class HelpCommand(Command):
 
 """
 
-    def execute(self, ui):
-        ui.write(self.usage_text)
+    def execute(self, session):
+        session.render(self.usage_text)
 
 
 class NotImplementedCommand(Command):
     """Prints a notice that this functionality isn't supported, yet."""
 
-    def execute(self, ui):
-        ui.write('NOT IMPLEMENTED\n\n')
+    def execute(self, session):
+        session.render('NOT IMPLEMENTED\n\n')
