@@ -1,6 +1,5 @@
 import re
-from sqlite3 import OperationalError
-from sqlite3 import dbapi2 as sqlite
+import psycopg2
 
 class Repository:
     """Encapsulates DB access."""
@@ -12,7 +11,7 @@ class Repository:
     def init_connection(self):
         """Set up DB connection, create DB & tables if necessary."""
 
-        self.connection = sqlite.connect(self.db_name)
+        self.connection = psycopg2.connect(database=self.db_name)
         self._set_up_tables()
 
     def close_connection(self):
@@ -23,8 +22,8 @@ class Repository:
         """Creates an activity named `name` in the DB."""
 
         db_cursor = self.connection.cursor()
-        statement = "INSERT INTO activities (name) VALUES (:activity_name)"
-        db_cursor.execute(statement, (name,))
+        statement = 'INSERT INTO activities (name) VALUES (%(activity_name)s)'
+        db_cursor.execute(statement, {'activity_name': name})
         self.connection.commit()
 
     def get_all_activities(self):
@@ -36,18 +35,19 @@ class Repository:
         return activities
 
     def _set_up_tables(self):
-        try:
-            # QQQ: Is there a better way to test for table existence?
-            statement = """CREATE TABLE activities (
-                    id INTEGER PRIMARY KEY,
-                    name VARCHAR(65535)
-                )"""
+        statements = [
+            """CREATE TABLE IF NOT EXISTS activities (
+                id   bigserial    primary key,
+                name varchar(255))""",
+            """CREATE TABLE IF NOT EXISTS log_entries (
+                id          bigserial   primary key,
+                activity_id int         not null references activities,
+                date        date        not null,
+                multiplier  int         not null default 1)"""
+        ]
+
+        for statement in statements:
             self.connection.cursor().execute(statement)
-            self.connection.commit()
-        except OperationalError, e:
-            # Bubble up any unexpected exceptions.
-            if not re.match('table activities already exists', e.message):
-                raise e
+        self.connection.commit()
 
-
-REPO = Repository('hc.db')
+REPO = Repository('habit-command')
